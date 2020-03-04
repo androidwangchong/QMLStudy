@@ -644,232 +644,415 @@ import QtQuick.Window 2.12
 //        }
 //    }
 //}
-Item {
-    width: 300
-    height: 480
 
-    //渐变别景色
-    Rectangle {
-        anchors.fill: parent
-        gradient: Gradient {
-            GradientStop {
-                position: 0.0
-                color: "#4a4a4a"
-            }
-            GradientStop {
-                position: 1.0
-                color: "#2b2b2b"
-            }
-        }
-    }
 
-    //主界面列表视图
-    ListView {
-        id: listView
+/**
+  动画过渡
+  */
+//Item {
+//    width: 300
+//    height: 480
 
-        anchors.fill: parent
+//    //渐变别景色
+//    Rectangle {
+//        anchors.fill: parent
+//        gradient: Gradient {
+//            GradientStop {
+//                position: 0.0
+//                color: "#4a4a4a"
+//            }
+//            GradientStop {
+//                position: 1.0
+//                color: "#2b2b2b"
+//            }
+//        }
+//    }
 
-        delegate: detailsDelegate //设置绘制代理
-        model: planets //绑定数据源
-    }
+//    //主界面列表视图
+//    ListView {
+//        id: listView
 
-    ListModel {
-        id: planets
+//        anchors.fill: parent
 
-        ListElement {
-            name: "Mercury"
-            imageSource: "images/mercury.jpeg"
-            facts: "Mercury is the smallest planet in the Solar System. It is the closest planet to the sun. It makes one trip around the Sun once every 87.969 days."
-        }
-        ListElement {
-            name: "Venus"
-            imageSource: "images/venus.jpeg"
-            facts: "Venus is the second planet from the Sun. It is a terrestrial planet because it has a solid, rocky surface. The other terrestrial planets are Mercury, Earth and Mars. Astronomers have known Venus for thousands of years."
-        }
-        ListElement {
-            name: "Earth"
-            imageSource: "images/earth.jpeg"
-            facts: "The Earth is the third planet from the Sun. It is one of the four terrestrial planets in our Solar System. This means most of its mass is solid. The other three are Mercury, Venus and Mars. The Earth is also called the Blue Planet, 'Planet Earth', and 'Terra'."
-        }
-        ListElement {
-            name: "Mars"
-            imageSource: "images/mars.jpeg"
-            facts: "Mars is the fourth planet from the Sun in the Solar System. Mars is dry, rocky and cold. It is home to the largest volcano in the Solar System. Mars is named after the mythological Roman god of war because it is a red planet, which signifies the colour of blood."
-        }
-    }
+//        delegate: detailsDelegate //设置绘制代理
+//        model: planets //绑定数据源
+//    }
 
-    Component {
-        id: detailsDelegate
+//    ListModel {
+//        id: planets
 
-        Item {
-            id: wrapper
+//        ListElement {
+//            name: "Mercury"
+//            imageSource: "images/mercury.jpeg"
+//            facts: "Mercury is the smallest planet in the Solar System. It is the closest planet to the sun. It makes one trip around the Sun once every 87.969 days."
+//        }
+//        ListElement {
+//            name: "Venus"
+//            imageSource: "images/venus.jpeg"
+//            facts: "Venus is the second planet from the Sun. It is a terrestrial planet because it has a solid, rocky surface. The other terrestrial planets are Mercury, Earth and Mars. Astronomers have known Venus for thousands of years."
+//        }
+//        ListElement {
+//            name: "Earth"
+//            imageSource: "images/earth.jpeg"
+//            facts: "The Earth is the third planet from the Sun. It is one of the four terrestrial planets in our Solar System. This means most of its mass is solid. The other three are Mercury, Venus and Mars. The Earth is also called the Blue Planet, 'Planet Earth', and 'Terra'."
+//        }
+//        ListElement {
+//            name: "Mars"
+//            imageSource: "images/mars.jpeg"
+//            facts: "Mars is the fourth planet from the Sun in the Solar System. Mars is dry, rocky and cold. It is home to the largest volcano in the Solar System. Mars is named after the mythological Roman god of war because it is a red planet, which signifies the colour of blood."
+//        }
+//    }
 
-            width: listView.width
-            height: 30
+//    Component {
+//        id: detailsDelegate
 
-            //列表项文本
-            Rectangle {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
+//        Item {
+//            id: wrapper
 
-                height: 30
+//            width: listView.width
+//            height: 30
 
-                color: "#333"
-                border.color: Qt.lighter(color, 1.2)
-                Text {
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 4
+//            //列表项文本
+//            Rectangle {
+//                anchors.left: parent.left
+//                anchors.right: parent.right
+//                anchors.top: parent.top
 
-                    font.pixelSize: parent.height - 4
-                    color: '#fff'
+//                height: 30
 
-                    text: name //ListElement中的name
-                }
-            }
+//                color: "#333"
+//                border.color: Qt.lighter(color, 1.2)
+//                Text {
+//                    anchors.left: parent.left
+//                    anchors.verticalCenter: parent.verticalCenter
+//                    anchors.leftMargin: 4
 
-            //列表项图标
-            Rectangle {
-                id: image
+//                    font.pixelSize: parent.height - 4
+//                    color: '#fff'
 
-                width: 26
-                height: 26
+//                    text: name //ListElement中的name
+//                }
+//            }
 
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.rightMargin: 2
-                anchors.topMargin: 2
+//            //列表项图标
+//            Rectangle {
+//                id: image
 
-                color: "yellow"
+//                width: 26
+//                height: 26
 
-                Image {
-                    anchors.fill: parent
+//                anchors.right: parent.right
+//                anchors.top: parent.top
+//                anchors.rightMargin: 2
+//                anchors.topMargin: 2
 
-                    fillMode: Image.PreserveAspectFit
+//                color: "yellow"
 
-                    source: imageSource //ListElement中的imageSource
-                }
-            }
+//                Image {
+//                    anchors.fill: parent
 
-            //鼠标点击列表项 进行状态前切换，
-            MouseArea {
-                anchors.fill: parent
-                onClicked: parent.state = "expanded" //切换到展开状态
-            }
+//                    fillMode: Image.PreserveAspectFit
 
-            //详情页展开时，文本详细信息
-            Item {
-                id: factsView
+//                    source: imageSource //ListElement中的imageSource
+//                }
+//            }
 
-                anchors.top: image.bottom //位于放大后的图标底部
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
+//            //鼠标点击列表项 进行状态前切换，
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: parent.state = "expanded" //切换到展开状态
+//            }
 
-                opacity: 0 //默认透明不显示  当点击代理项时该属性会慢慢变得可见
+//            //详情页展开时，文本详细信息
+//            Item {
+//                id: factsView
 
-                Rectangle {
-                    anchors.fill: parent
+//                anchors.top: image.bottom //位于放大后的图标底部
+//                anchors.left: parent.left
+//                anchors.right: parent.right
+//                anchors.bottom: parent.bottom
 
-                    gradient: Gradient {
-                        GradientStop {
-                            position: 0.0
-                            color: "#fed958"
-                        }
-                        GradientStop {
-                            position: 1.0
-                            color: "#fecc2f"
-                        }
-                    }
-                    border.color: '#000000'
-                    border.width: 2
+//                opacity: 0 //默认透明不显示  当点击代理项时该属性会慢慢变得可见
 
-                    Text {
-                        anchors.fill: parent
-                        anchors.margins: 5
+//                Rectangle {
+//                    anchors.fill: parent
 
-                        clip: true //可剪切
-                        wrapMode: Text.WordWrap //文本支持换行
-                        color: '#1f1f21'
+//                    gradient: Gradient {
+//                        GradientStop {
+//                            position: 0.0
+//                            color: "#fed958"
+//                        }
+//                        GradientStop {
+//                            position: 1.0
+//                            color: "#fecc2f"
+//                        }
+//                    }
+//                    border.color: '#000000'
+//                    border.width: 2
 
-                        font.pixelSize: 12
+//                    Text {
+//                        anchors.fill: parent
+//                        anchors.margins: 5
 
-                        text: facts
-                    }
-                }
-            }
+//                        clip: true //可剪切
+//                        wrapMode: Text.WordWrap //文本支持换行
+//                        color: '#1f1f21'
 
-            //项最大化时 右上角关闭按钮
-            Rectangle {
-                id: closeButton
+//                        font.pixelSize: 12
 
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.rightMargin: 2
-                anchors.topMargin: 2
+//                        text: facts
+//                    }
+//                }
+//            }
 
-                width: 26
-                height: 26
+//            //项最大化时 右上角关闭按钮
+//            Rectangle {
+//                id: closeButton
 
-                color: "#157efb"
-                border.color: Qt.lighter(color, 1.1)
+//                anchors.right: parent.right
+//                anchors.top: parent.top
+//                anchors.rightMargin: 2
+//                anchors.topMargin: 2
 
-                opacity: 0
+//                width: 26
+//                height: 26
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: wrapper.state = "" //点击恢复到默认状态
-                }
-            }
+//                color: "#157efb"
+//                border.color: Qt.lighter(color, 1.1)
 
-            //自定义代理状态
-            states: [
-                State {
-                    name: "expanded"
-                    //在点击列表项后 各项属相变化
+//                opacity: 0
 
-                    //代理高度铺满视图高度
-                    PropertyChanges {
-                        target: wrapper
-                        height: listView.height
-                    }
-                    //列表项的图标放大
-                    PropertyChanges {
-                        target: image
-                        width: listView.width
-                        height: listView.width
-                        anchors.rightMargin: 0
-                        anchors.topMargin: 30 //距离顶部30像素
-                    }
-                    //文本详细信息可见
-                    PropertyChanges {
-                        target: factsView
-                        opacity: 1
-                    }
-                    //关闭按钮可见
-                    PropertyChanges {
-                        target: closeButton
-                        opacity: 1
-                    }
-                    //列表项视图
-                    PropertyChanges {
-                        target: wrapper.ListView.view
-                        contentY: wrapper.y
-                        interactive: false
-                    }
-                }
-            ]
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: wrapper.state = "" //点击恢复到默认状态
+//                }
+//            }
 
-            //项变化时 过程
-            transitions: [
-                Transition {
-                    NumberAnimation {
-                        duration: 200
-                        properties: "height,width,anchors.rightMargin,anchors.topMargin,opacity,contentY"
-                    }
-                }
-            ]
-        }
+//            //自定义代理状态
+//            states: [
+//                State {
+//                    name: "expanded"
+//                    //在点击列表项后 各项属相变化
+
+//                    //代理高度铺满视图高度
+//                    PropertyChanges {
+//                        target: wrapper
+//                        height: listView.height
+//                    }
+//                    //列表项的图标放大
+//                    PropertyChanges {
+//                        target: image
+//                        width: listView.width
+//                        height: listView.width
+//                        anchors.rightMargin: 0
+//                        anchors.topMargin: 30 //距离顶部30像素
+//                    }
+//                    //文本详细信息可见
+//                    PropertyChanges {
+//                        target: factsView
+//                        opacity: 1
+//                    }
+//                    //关闭按钮可见
+//                    PropertyChanges {
+//                        target: closeButton
+//                        opacity: 1
+//                    }
+//                    //列表项视图
+//                    PropertyChanges {
+//                        target: wrapper.ListView.view
+//                        contentY: wrapper.y
+//                        interactive: false
+//                    }
+//                }
+//            ]
+
+//            //项变化时 过程
+//            transitions: [
+//                Transition {
+//                    NumberAnimation {
+//                        duration: 200
+//                        properties: "height,width,anchors.rightMargin,anchors.topMargin,opacity,contentY"
+//                    }
+//                }
+//            ]
+//        }
+//    }
+//}
+
+
+/**
+  日历选择器
+  */
+//import QtQuick.Window 2.0
+//import QtGraphicalEffects 1.0
+
+//Window {
+//    visible: true
+//    width: 300
+//    height: 300
+
+//    Rectangle {
+//        id: root
+//        anchors.fill: parent
+//        width: root.width
+//        height: root.height
+//        color: "yellow"
+
+//        //日期头
+//        Row {
+//            id: weekname
+//            spacing: 2
+//            padding: 5
+
+//            Repeater {
+//                model: ["周天", "周一", "周二", "周三", "周四", "周五", "周六"]
+//                Rectangle {
+//                    width: (root.width - 6 * weekname.spacing - 10) / 7
+//                    height: 30
+//                    radius: 3
+//                    color: "lightBlue"
+//                    Text {
+//                        anchors.centerIn: parent
+//                        text: modelData
+//                    }
+//                }
+//            }
+//        }
+
+//        //天
+//        GridView {
+//            id: weekday
+//            boundsBehavior: Flickable.StopAtBounds
+//            anchors //布局
+//            {
+//                top: weekname.bottom
+//                left: root.left
+//                leftMargin: 5
+//                right: root.right
+//                rightMargin: 5
+//                bottom: root.bottom
+//            }
+//            model: 42 //天数
+
+//            cellWidth: (root.width - 10) / 7
+//            cellHeight: (root.width - 10) / 7
+//            //            Repeater
+//            //            {
+//            //                Rectangle
+//            //                {
+//            //                    radius: 8;
+//            //                    color: "lightBlue";
+//            //                    Text
+//            //                    {
+//            //                        anchors.centerIn: parent;
+//            //                        text: modelData;
+//            //                    }
+//            //                }
+//            //            }
+//            delegate: numberDelegate
+//            focus: true //可以获取焦点
+//        }
+
+//        Component //绘制代理
+//        {
+//            id: numberDelegate
+//            Rectangle {
+//                width: weekday.cellWidth
+//                height: weekday.cellHeight
+//                color: GridView.isCurrentItem ? "green" : "lightGreen" //根据是否是当前项设置颜色
+//                border.color: Qt.lighter("green")
+//                Text {
+//                    anchors.centerIn: parent
+//                    font.pixelSize: 10
+//                    text: index + 1 //文本取索引值
+//                }
+//            }
+//        }
+//    }
+//}
+
+
+/**
+  动态获取image
+  */
+//import QtQuick.XmlListModel 2.0
+
+//Item {
+//    width: 300
+//    height: 480
+
+//    Component {
+//        id: imageDelegate
+
+//        Item {
+//            width: listView.width
+//            height: 220
+
+//            Column {
+//                Text {
+//                    text: title
+//                    color: '#e0e0e0'
+//                }
+//                Image {
+//                    width: listView.width
+//                    height: 200
+//                    fillMode: Image.PreserveAspectCrop
+//                    source: imageSource
+//                }
+//            }
+//        }
+//    }
+
+//    XmlListModel {
+//        id: imageModel
+
+//        source: "http://www.padmag.cn/feed"
+//        query: "/rss/channel/item"
+
+//        XmlRole {
+//            name: "title"
+//            query: "title/string()"
+//        }
+//        XmlRole {
+//            name: "imageSource"
+//            query: "substring-before(substring-after(description/string(), 'img src=\"'), '\"')"
+//        }
+//    }
+
+//    ListView {
+//        id: listView
+//        anchors.fill: parent
+//        model: imageModel
+//        delegate: imageDelegate
+//    }
+//}
+Canvas {
+
+    id: canvas
+    width: 200
+    height: 200
+
+    onPaint: {
+        var ctx = getContext("2d")
+        ctx.lineWidth = 4
+        ctx.strokeStyle = "blue"
+        // setup the fill
+        ctx.fillStyle = "steelblue"
+        // begin a new path to draw
+        ctx.beginPath()
+        // top-left start point
+        ctx.moveTo(50, 50)
+        // upper line
+        ctx.lineTo(150, 50)
+        // right line
+        ctx.lineTo(150, 150)
+        // bottom line
+        ctx.lineTo(50, 150)
+        // left line through path closing
+        ctx.closePath()
+        // fill using fill style
+        ctx.fill()
+        // stroke using line width and stroke style
+        ctx.stroke()
     }
 }
